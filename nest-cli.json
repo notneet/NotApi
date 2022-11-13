@@ -1,5 +1,40 @@
 {
   "$schema": "https://json.schemastore.org/nest-cli",
   "collection": "@nestjs/schematics",
-  "sourceRoot": "src"
+  "sourceRoot": "apps/not-api/src",
+  "monorepo": true,
+  "root": "apps/not-api",
+  "compilerOptions": {
+    "webpack": true,
+    "tsConfigPath": "apps/not-api/tsconfig.app.json"
+  },
+  "projects": {
+    "not-api": {
+      "type": "application",
+      "root": "apps/not-api",
+      "entryFile": "main",
+      "sourceRoot": "apps/not-api/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/not-api/tsconfig.app.json"
+      }
+    },
+    "password-generator": {
+      "type": "application",
+      "root": "apps/password-generator",
+      "entryFile": "main",
+      "sourceRoot": "apps/password-generator/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/password-generator/tsconfig.app.json"
+      }
+    },
+    "commons": {
+      "type": "library",
+      "root": "libs/commons",
+      "entryFile": "index",
+      "sourceRoot": "libs/commons/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/commons/tsconfig.lib.json"
+      }
+    }
+  }
 }
