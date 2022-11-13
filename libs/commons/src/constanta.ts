@@ -1,0 +1,11 @@
+export enum EnvKey {
+  API_VERSION = 'API_VERSION',
+  GITHUB_REPOSITORY = 'GITHUB_REPOSITORY',
+  DOCS_URL = 'DOCS_URL',
+  APP_URL = 'APP_URL',
+  APP_PORT = 'APP_PORT',
+}
+
+export enum EnvDef {
+  DEF_APP_PORT = 3000,
+}
