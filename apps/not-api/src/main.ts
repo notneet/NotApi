@@ -1,4 +1,4 @@
-import { EnvKey } from '@libs/commons';
+import { EnvDef, EnvKey } from '@libs/commons';
 import { Logger } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
@@ -9,7 +9,7 @@ async function bootstrap() {
     ConfigModule.forRoot({ envFilePath: ['.env', ',env.prod', '.env.dev'] }),
   );
   const configService = configModule.get(ConfigService);
-  const port = configService.get<number>(EnvKey.APP_PORT);
+  const port = configService.get<number>(EnvKey.APP_PORT, EnvDef.DEF_APP_PORT);
   const app = await NestFactory.create(AppModule);
 
   await app.listen(port, () => {

@@ -5,3 +5,7 @@ export enum EnvKey {
   APP_URL = 'APP_URL',
   APP_PORT = 'APP_PORT',
 }
+
+export enum EnvDef {
+  DEF_APP_PORT = 3000,
+}
