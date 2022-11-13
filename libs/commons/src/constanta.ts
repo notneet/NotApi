@@ -3,4 +3,5 @@ export enum EnvKey {
   GITHUB_REPOSITORY = 'GITHUB_REPOSITORY',
   DOCS_URL = 'DOCS_URL',
   APP_URL = 'APP_URL',
+  APP_PORT = 'APP_PORT',
 }
