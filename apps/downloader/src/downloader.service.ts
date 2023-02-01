@@ -24,7 +24,17 @@ export class DownloaderService {
         },
       }),
     );
-    const mp3 = response.data.mp3[0];
+    let mp3 = null;
+    let mp3Url = null;
+    let mp3Format = null;
+    let mp3FormatNote = null;
+
+    if (Array.isArray(response.data?.mp3) && response.data?.mp3.length > 0) {
+      mp3 = response.data?.mp3[0];
+      mp3Url = mp3?.mp3_url;
+      mp3Format = mp3?.mp3_format;
+      mp3FormatNote = mp3?.mp3_format_note;
+    }
 
     const payload: VideoResponse = {
       message: response.message,
@@ -35,7 +45,7 @@ export class DownloaderService {
         duration: response.data?.duration,
         thumbnail: response.data?.thumbnail,
         mp4_token: this.normalizeURL(response.data.mp4),
-        mp3_token: this.normalizeURL(mp3.mp3_url),
+        mp3_token: this.normalizeURL(mp3?.mp3_url),
         mp4_cdn: response.data?.mp4_cdn,
         mp3_format: mp3?.mp3_format,
         mp3_format_note: mp3?.mp3_format_note,
