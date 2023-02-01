@@ -4,11 +4,11 @@ import {
   Injectable,
   PipeTransform,
 } from '@nestjs/common';
-import { RequestDownloaderPayload } from '../dtos/requests/request-downloader.payload';
+import { InstagramRequestPayload } from '../dtos/requests/instagram-request.payload';
 
 @Injectable()
 export class InstagramURLPipe implements PipeTransform {
-  transform(value: RequestDownloaderPayload, metadata: ArgumentMetadata) {
+  transform(value: InstagramRequestPayload, metadata: ArgumentMetadata) {
     if (!this.isValidInstagramURL(value.url)) throw new BadRequestException();
     return value;
   }
