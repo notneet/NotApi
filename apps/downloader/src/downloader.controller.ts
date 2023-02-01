@@ -15,6 +15,7 @@ import { YoutubeURLPipe } from './pipes/youtube-url.pipe';
 import { DownloaderService } from './downloader.service';
 import {
   ApiBadRequestResponse,
+  ApiExcludeEndpoint,
   ApiOkResponse,
   ApiOperation,
   ApiTags,
@@ -76,6 +77,7 @@ export class DownloaderController {
   }
 
   @Get()
+  @ApiExcludeEndpoint()
   getHello(): string {
     return this.downloaderService.getHello();
   }

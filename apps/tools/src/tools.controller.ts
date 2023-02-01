@@ -1,6 +1,7 @@
 import { Body, Controller, Get, HttpCode, Post } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
+  ApiExcludeEndpoint,
   ApiOkResponse,
   ApiOperation,
   ApiTags,
@@ -34,6 +35,7 @@ export class ToolsController {
   }
 
   @Get()
+  @ApiExcludeEndpoint()
   getHello(): string {
     return this.toolsService.getHello();
   }
