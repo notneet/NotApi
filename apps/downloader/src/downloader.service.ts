@@ -1,7 +1,10 @@
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { lastValueFrom } from 'rxjs';
-import { InstagramResponse } from './dtos/payloads/instagram.payload';
+import {
+  InstagramResponse,
+  LinkInstagramResponse,
+} from './dtos/payloads/instagram.payload';
 import { VideoResponse } from './dtos/payloads/video.payload';
 import { load } from 'cheerio';
 import { IGResponse } from './dtos/responses/instagram.response';
@@ -72,22 +75,24 @@ export class DownloaderService {
     return payload;
   }
 
-  private parseIGResponse(html: string): [string[], string[]] {
-    let downloads: string[] = [];
-    let previews: string[] = [];
+  private parseIGResponse(
+    html: string,
+  ): [LinkInstagramResponse[], LinkInstagramResponse[]] {
+    let downloads: LinkInstagramResponse[] = [];
+    let previews: LinkInstagramResponse[] = [];
     const $ = load(html);
     const imgSrc = $('img');
     const aHref = $('a.button');
 
     if (imgSrc.length > 0) {
       imgSrc.each((_, el) => {
-        previews.push($(el).attr('src'));
+        previews.push({ url: $(el).attr('src') });
       });
     }
 
     if (aHref.length > 0) {
       aHref.each((_, el) => {
-        downloads.push($(el).attr('href'));
+        downloads.push({ url: $(el).attr('href') });
       });
     }
 
