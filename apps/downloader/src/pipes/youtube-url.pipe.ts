@@ -4,11 +4,11 @@ import {
   Injectable,
   PipeTransform,
 } from '@nestjs/common';
-import { RequestDownloaderPayload } from '../dtos/requests/request-downloader.payload';
+import { YoutubeRequestPayload } from '../dtos/requests/youtube-request.payload';
 
 @Injectable()
 export class YoutubeURLPipe implements PipeTransform {
-  transform(value: RequestDownloaderPayload, metadata: ArgumentMetadata) {
+  transform(value: YoutubeRequestPayload, metadata: ArgumentMetadata) {
     if (!this.isValidYoutubeURL(value.url)) throw new BadRequestException();
     return value;
   }
