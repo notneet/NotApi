@@ -36,9 +36,9 @@ This api will provide some basic tools for developer:
 - [ ] UTF16 Decode
 
 ### Downloader
-- [ ] Youtube Mp4
-- [ ] Youtube Mp3
-- [ ] Instagram Pic
+- [x] Youtube Mp4
+- [x] Youtube Mp3
+- [x] Instagram Pic
 
 ## License
 
