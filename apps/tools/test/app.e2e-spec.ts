@@ -1,14 +1,14 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
-import { PasswordGeneratorModule } from './../src/password-generator.module';
+import { ToolsModule } from './../src/tools.module';
 
-describe('PasswordGeneratorController (e2e)', () => {
+describe('ToolsController (e2e)', () => {
   let app: INestApplication;
 
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [PasswordGeneratorModule],
+      imports: [ToolsModule],
     }).compile();
 
     app = moduleFixture.createNestApplication();

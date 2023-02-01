@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { PasswordGeneratorModule } from 'apps/password-generator/src/password-generator.module';
+import { DownloaderModule } from 'apps/downloader/src/downloader.module';
+import { ToolsModule } from 'apps/tools/src/tools.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
@@ -10,7 +11,8 @@ import { AppService } from './app.service';
       isGlobal: true,
       envFilePath: ['.env', ',env.prod', '.env.dev'],
     }),
-    PasswordGeneratorModule,
+    ToolsModule,
+    DownloaderModule,
   ],
   controllers: [AppController],
   providers: [AppService],

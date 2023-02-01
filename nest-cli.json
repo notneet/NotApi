@@ -18,15 +18,6 @@
         "tsConfigPath": "apps/not-api/tsconfig.app.json"
       }
     },
-    "password-generator": {
-      "type": "application",
-      "root": "apps/password-generator",
-      "entryFile": "main",
-      "sourceRoot": "apps/password-generator/src",
-      "compilerOptions": {
-        "tsConfigPath": "apps/password-generator/tsconfig.app.json"
-      }
-    },
     "commons": {
       "type": "library",
       "root": "libs/commons",
@@ -34,6 +25,24 @@
       "sourceRoot": "libs/commons/src",
       "compilerOptions": {
         "tsConfigPath": "libs/commons/tsconfig.lib.json"
+      }
+    },
+    "downloader": {
+      "type": "application",
+      "root": "apps/downloader",
+      "entryFile": "main",
+      "sourceRoot": "apps/downloader/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/downloader/tsconfig.app.json"
+      }
+    },
+    "tools": {
+      "type": "application",
+      "root": "apps/tools",
+      "entryFile": "main",
+      "sourceRoot": "apps/tools/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/tools/tsconfig.app.json"
       }
     }
   }
