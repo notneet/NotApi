@@ -1,19 +1,13 @@
 import { Injectable } from '@nestjs/common';
 
-@Injectable()
-export class PasswordGeneratorService {
-  private MAX_CHAR_LENGTH = 50;
-  private MIN_CHAR_LENGTH = 4;
+const MAX_CHAR_PW_LENGTH = 50;
+const MIN_CHAR_PW_LENGTH = 4;
 
-  /**
-   * max char length: 50
-   * min char length: 4
-   * include:
-   *  - upper
-   *  - num
-   *  - symbols
-   */
-  genPass(
+@Injectable()
+export class ToolsService {
+  constructor() {}
+
+  mixPassword(
     charLength: number,
     areUpper: boolean,
     areNumbers: boolean,
@@ -21,9 +15,9 @@ export class PasswordGeneratorService {
   ) {
     let charCodes = this.lowerCharCode;
 
-    if (charLength > this.MAX_CHAR_LENGTH) {
-      charLength = this.MAX_CHAR_LENGTH;
-    } else if (charLength < this.MIN_CHAR_LENGTH) {
+    if (charLength > MAX_CHAR_PW_LENGTH) {
+      charLength = MAX_CHAR_PW_LENGTH;
+    } else if (charLength < MIN_CHAR_PW_LENGTH) {
       return 'Are you sure about this?';
     }
 
@@ -38,7 +32,7 @@ export class PasswordGeneratorService {
       passwordCharacters.push(String.fromCharCode(randCharCodes));
     }
 
-    return passwordCharacters.join('');
+    return { password: passwordCharacters.join('') };
   }
 
   private get upperCharCode(): number[] {
@@ -68,5 +62,9 @@ export class PasswordGeneratorService {
     }
 
     return itArr;
+  }
+
+  getHello(): string {
+    return 'Hello World!';
   }
 }
