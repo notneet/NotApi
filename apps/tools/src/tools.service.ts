@@ -11,6 +11,11 @@ import * as moment from 'moment';
 const MAX_CHAR_PW_LENGTH = 50;
 const MIN_CHAR_PW_LENGTH = 4;
 
+export interface DateResult {
+  timezone: string;
+  result: string;
+}
+
 @Injectable()
 export class ToolsService {
   constructor(
@@ -18,27 +23,30 @@ export class ToolsService {
     private readonly dateHelper: DateTimeService,
   ) {}
 
-  dateConv(rawDate: string, timezone: string) {
+  dateConv(rawDate: string, timezones: string[]) {
+    const result: DateResult[] = [];
     let baseDate: string;
     let utcDate: string;
     let convertedDate: string;
-    try {
-      baseDate = this.dateHelper.makeMomentObject(rawDate);
-      utcDate = this.dateHelper.convertToUTC(baseDate);
-      convertedDate = this.dateHelper.convertToTimeZone(timezone, utcDate);
-    } catch (error) {
-      if (error.message.includes('Moment Timezone has no data for')) {
-        throw new BadRequestException(`can't find timezone: ${timezone}`);
-      } else {
-        throw new InternalServerErrorException(error);
+    for (const timezone of timezones) {
+      try {
+        baseDate = this.dateHelper.makeMomentObject(rawDate);
+        utcDate = this.dateHelper.convertToUTC(baseDate);
+        convertedDate = this.dateHelper.convertToTimeZone(timezone, utcDate);
+        result.push({ timezone: timezone, result: convertedDate });
+      } catch (error) {
+        if (error.message.includes('Moment Timezone has no data for')) {
+          throw new BadRequestException(`can't find timezone: ${timezone}`);
+        } else {
+          throw new InternalServerErrorException(error);
+        }
       }
     }
 
     return {
       base: baseDate,
-      timezone,
-      result: convertedDate,
       utc: utcDate,
+      dates: result,
       misc: {
         os_timezone: this.config.get('TZ'),
         os_datetime: this.dateHelper.makeMomentObject(
