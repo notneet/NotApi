@@ -1,11 +1,49 @@
-import { Injectable } from '@nestjs/common';
+import { DateTimeService } from '@libs/commons/helper/date-time/date-time.service';
+import {
+  BadRequestException,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import * as moment from 'moment';
 
 const MAX_CHAR_PW_LENGTH = 50;
 const MIN_CHAR_PW_LENGTH = 4;
 
 @Injectable()
 export class ToolsService {
-  constructor() {}
+  constructor(
+    private readonly config: ConfigService,
+    private readonly dateHelper: DateTimeService,
+  ) {}
+
+  dateConv(rawDate: string, timezone: string) {
+    let baseDate: string;
+    let utcDate: string;
+    let convertedDate: string;
+    try {
+      baseDate = this.dateHelper.makeMomentObject(rawDate);
+      utcDate = this.dateHelper.getUTCDateTime(baseDate);
+      convertedDate = this.dateHelper.convertToTimeZone(timezone, utcDate);
+    } catch (error) {
+      if (error.message.includes('Moment Timezone has no data for')) {
+        throw new BadRequestException(`can't find timezone: ${timezone}`);
+      } else {
+        throw new InternalServerErrorException(error);
+      }
+    }
+
+    return {
+      base: baseDate,
+      timezone,
+      result: convertedDate,
+      utc: utcDate,
+      misc: {
+        os_timezone: this.config.get('TZ'),
+        os_datetime: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
+      },
+    };
+  }
 
   mixPassword(
     charLength: number,

@@ -1,4 +1,11 @@
-import { Body, Controller, Get, HttpCode, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Post,
+} from '@nestjs/common';
 import {
   ApiBadRequestResponse,
   ApiExcludeEndpoint,
@@ -6,6 +13,7 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
+import { RequestDateConv } from './dtos/requests/request-dateconv.dto';
 import { RequestPWGenDto } from './dtos/requests/request-pwgen.dto';
 import { ToolsService } from './tools.service';
 
@@ -32,6 +40,21 @@ export class ToolsController {
       body.include_number,
       body.include_symbol,
     );
+  }
+
+  @Post('date-conv')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({
+    summary: 'DateTime converted by timezone.',
+  })
+  @ApiOkResponse({
+    description: 'Return converted datetime by timezone region.',
+  })
+  @ApiBadRequestResponse({
+    description: 'Please check the payload.',
+  })
+  async handleDateConverter(@Body() body: RequestDateConv) {
+    return this.toolsService.dateConv(body.raw_date, body.timezone);
   }
 
   @Get()
