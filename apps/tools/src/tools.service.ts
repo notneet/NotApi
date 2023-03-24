@@ -5,6 +5,7 @@ import {
   InternalServerErrorException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { time } from 'console';
 import * as moment from 'moment';
 
 const MAX_CHAR_PW_LENGTH = 50;
@@ -23,7 +24,7 @@ export class ToolsService {
     let convertedDate: string;
     try {
       baseDate = this.dateHelper.makeMomentObject(rawDate);
-      utcDate = this.dateHelper.getUTCDateTime(baseDate);
+      utcDate = this.dateHelper.convertToUTC(baseDate);
       convertedDate = this.dateHelper.convertToTimeZone(timezone, utcDate);
     } catch (error) {
       if (error.message.includes('Moment Timezone has no data for')) {
@@ -40,7 +41,9 @@ export class ToolsService {
       utc: utcDate,
       misc: {
         os_timezone: this.config.get('TZ'),
-        os_datetime: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
+        os_datetime: this.dateHelper.makeMomentObject(
+          new Date() as unknown as string,
+        ),
       },
     };
   }
