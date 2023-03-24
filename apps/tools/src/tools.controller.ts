@@ -54,7 +54,7 @@ export class ToolsController {
     description: 'Please check the payload.',
   })
   async handleDateConverter(@Body() body: RequestDateConv) {
-    return this.toolsService.dateConv(body.raw_date, body.timezone);
+    return this.toolsService.dateConv(body.raw_date, body.timezones);
   }
 
   @Get()

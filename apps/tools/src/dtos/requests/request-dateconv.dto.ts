@@ -1,7 +1,7 @@
 import { BadRequestException } from '@nestjs/common';
 import { ApiProperty } from '@nestjs/swagger';
 import { Transform, TransformFnParams } from 'class-transformer';
-import { IsDateString, IsNotEmpty, IsString } from 'class-validator';
+import { IsArray, IsDateString, IsNotEmpty, IsString } from 'class-validator';
 import * as moment from 'moment';
 
 const dateTransform = ({ value }: TransformFnParams) => {
@@ -18,8 +18,9 @@ export class RequestDateConv {
   @ApiProperty()
   raw_date: string;
 
-  @IsString()
+  @IsArray()
+  @IsString({ each: true })
   @IsNotEmpty()
   @ApiProperty()
-  timezone: string;
+  timezones: string[];
 }
